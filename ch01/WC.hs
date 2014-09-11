@@ -1,3 +1,7 @@
 
-main = interact wordCount
-    where wordCount input = show (length (lines input)) ++ "\n"
+main = interact output
+	where
+		output input = show (linecount input) ++ " " ++ show (wordcount input)  ++ " " ++ show (bytecount input) ++ "\n"
+		wordcount input = length (words input)
+		linecount input = length (lines input)
+		bytecount input = length input
