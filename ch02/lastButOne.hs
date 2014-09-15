@@ -6,3 +6,10 @@ lastButOne xs = if length xs > 2
                 else if length xs == 2
                     then Just (head xs)
                     else Nothing
+
+sndLast :: [a] -> Maybe a
+sndLast [] = Nothing
+sndLast [a] = Nothing
+sndLast (x:y:zs)
+    | null zs = Just x
+    | otherwise = sndLast (y:zs)
