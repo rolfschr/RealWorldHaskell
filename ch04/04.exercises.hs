@@ -26,3 +26,12 @@ safeHead' = safeListFunc head
 safeTail' = safeListFunc tail
 safeLast' = safeListFunc last
 safeInit' = safeListFunc init
+
+myF x = x == "_"
+
+-- Write a function splitWith that acts similarly to words, but takes a predicate and a list of any type, and splits its input list on every element for which the predicate returns False.
+splitWith :: (a -> Bool) -> [a] -> [[a]]
+splitWith f [] = []
+splitWith f xs = [pre] ++ (splitWith f suf)
+    where
+        (pre, suf) = break f (dropWhile f xs) -- use because break returns ([],rest) if seperator is the head
