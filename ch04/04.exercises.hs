@@ -1,5 +1,6 @@
 -- file: ch04/ch04.exercises.hs
 import Data.Maybe
+import Data.Char (digitToInt)
 
 safeHead :: [a] -> Maybe a
 safeHead (x:xs) = Just x
@@ -35,3 +36,11 @@ splitWith f [] = []
 splitWith f xs = [pre] ++ (splitWith f suf)
     where
         (pre, suf) = break f (dropWhile f xs) -- use because break returns ([],rest) if seperator is the head
+
+asInt_fold :: String -> Int
+asInt_fold [] = 0
+asInt_fold (x:xs)
+    | x == '-' = - asInt_fold xs
+    | otherwise = foldl f 0 (x:xs)
+    where
+        f acc c = acc * 10 + digitToInt c
