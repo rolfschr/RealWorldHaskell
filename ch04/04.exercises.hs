@@ -44,3 +44,8 @@ asInt_fold (x:xs)
     | otherwise = foldl f 0 (x:xs)
     where
         f acc c = acc * 10 + digitToInt c
+
+concat_fold :: [[a]] -> [a]
+concat_fold xs = foldr (++) [] xs
+
+test_concat_fold = concat_fold [[1], [2,3], [4]]
