@@ -76,3 +76,15 @@ takeWhile_fold p xs = foldr step [] xs
             | otherwise = []
 
 test_takeWhile_fold = takeWhile_fold (odd) [1,3,5,2,4,7]
+
+groupBy :: Eq a => (a -> a -> Bool) -> [a] -> [[a]]
+--groupBy f [x] = [[x]]
+groupBy f (x:xs) = foldr step [[]] (x:xs)
+    where
+        step x (y:ys)
+            | null y = [[x]]
+            | x `f` (head y) = (x:y) : ys
+            | otherwise = [x] : y : ys
+
+test_groupBy = groupBy (==) "MAssissippZ"
+test_groupBy2 = groupBy (<) [1,2,2,4,4,5,6,7,8,9,9]
