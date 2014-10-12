@@ -1,6 +1,7 @@
 -- file: ch04/ch04.exercises.hs
 import Data.Maybe
 import Data.Char (digitToInt)
+import Data.Char (isSpace)
 
 safeHead :: [a] -> Maybe a
 safeHead (x:xs) = Just x
@@ -88,3 +89,35 @@ groupBy f (x:xs) = foldr step [[]] (x:xs)
 
 test_groupBy = groupBy (==) "MAssissippZ"
 test_groupBy2 = groupBy (<) [1,2,2,4,4,5,6,7,8,9,9]
+
+any_fold :: (a -> Bool) -> [a] -> Bool
+any_fold p xs = foldr f False xs
+    where
+        f x b = b || p x
+
+any_fold' :: (a -> Bool) -> [a] -> Bool
+any_fold' p = foldr (\x b -> p x || b) False
+
+test_any_fold = any_fold (>9) [1,2,3,4,5,6,11]
+
+cycle_fold :: [a] -> [a]
+cycle_fold xs = foldr f [] [1..]
+    where
+        f _ ys = xs ++ ys
+
+words_fold :: String -> [String]
+words_fold s = foldr f [[]] s
+    where
+        f c (y:ys)
+            | c == ' ' = [] : y : ys
+            | otherwise =  (c:y) : ys
+
+words_fold' :: String -> [String]
+words_fold' s = groupBy (\c1 c2 -> c1 /= ' ') s
+
+unlines_fold :: [String] -> String
+unlines_fold ss = foldr1 f ss
+    where
+        f s ys = s ++ "\n" ++ ys
+
+test_unlines_fold = unlines_fold ["fst line", "scond", "thrid"]
